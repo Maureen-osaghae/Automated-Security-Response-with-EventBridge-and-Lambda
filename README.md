@@ -108,7 +108,7 @@ import json
             'body': json.dumps('Hello from Lambda!')
         }
 
-<img width="596" height="207" alt="image" src="https://github.com/user-attachments/assets/d391142b-35fc-4ed8-a5df-db457ec15d73" />
+<img width="794" height="366" alt="image" src="https://github.com/user-attachments/assets/69f730ec-0327-4029-adad-84c8d284bfc1" />
 
 # The Security Response Code
 Here’s the Python code for the security response function: check code file.
@@ -271,11 +271,10 @@ Look for a user with a suspicious name (like admin-abc123, backup-def456, system
 
 # Check if the Suspicious User was Created
 Navigate to IAM > Users
-Look for a user with a suspicious name (like admin-abc123, backup-def456, system-ghi789, etc…)
 
-<img width="806" height="202" alt="image" src="https://github.com/user-attachments/assets/f69d3753-1ba6-4d21-b33f-3bbb93a4329c" />
+<img width="659" height="200" alt="image" src="https://github.com/user-attachments/assets/b8b20dfd-287e-48c2-abcc-607137d0462a" />
 
-<img width="397" height="235" alt="image" src="https://github.com/user-attachments/assets/0f2583cf-cc24-40db-b0a0-7613968e6707" />
+<img width="464" height="359" alt="image" src="https://github.com/user-attachments/assets/29dd5e85-2247-47f8-ac23-5955e8a42258" />
 
 
 If you see the user, great! The attack simulation worked. We’ll come back to this, but now let’s see if your security automation responded.
@@ -293,11 +292,49 @@ Invocations: Should show the rule was triggered
 
 If you see these metrics, EventBridge successfully detected the user creation and triggered your Lambda function. If not, give it another couple of minutes and refresh. You should eventually see the metrics, and once you do, proceed to step 3.
 
-#Check the Lambda Function Logs
+# Check the Lambda Function Logs
 Navigate to Lambda > Functions > security-response
 Go to Monitor and review the metrics graphcs
 Then, click on View CloudWatch Logs
 Click on the most recent log stream (the first one)
+
+You should see:
+
+The EventBridge event that triggered the function
+Details about the user creation event
+Confirmation that the quarantine policy was applied
+Success message for the SNS notification
+
+<img width="549" height="318" alt="image" src="https://github.com/user-attachments/assets/3062c4ca-3554-4293-bdce-72b4ecd76a96" />
+
+Check if the User was Quarantined
+Go back to the suspicious user you found in Step 1:
+
+Click on the user in IAM
+Check the Permissions tab – you should see the AutomatedSecurityQuarantine managed policy attached
+Check the Tags tab – you should see quarantine-related tags like:
+SecurityStatus: Quarantined
+QuarantineReason: Automated response to suspicious user creation
+QuarantineTime: timestamp (notice the time difference between both timestamps)
+
+<img width="638" height="137" alt="image" src="https://github.com/user-attachments/assets/570ce004-2525-4782-9daa-f8ada6c40870" />
+
+<img width="657" height="150" alt="image" src="https://github.com/user-attachments/assets/459468a8-74e9-40ec-b8e4-c5d86e291894" />
+
+If you see these, your Lambda function successfully quarantined the user!
+
+Check Your Email
+You should receive a detailed security alert with:
+
+Information about the suspicious user creation
+Details about the automated response
+Next steps for investigation
+
+<img width="648" height="380" alt="image" src="https://github.com/user-attachments/assets/d821cc49-1d2a-4e1f-b405-a592416e5455" />
+
+What’s really nice about this alert is that it a) removes all the noise and only focuses on the threat, and b) gives you step-by-step what you should do. You could even link to an internal playbook in your docs, for example.
+
+
 
 
 
