@@ -334,6 +334,35 @@ Next steps for investigation
 
 What’s really nice about this alert is that it a) removes all the noise and only focuses on the threat, and b) gives you step-by-step what you should do. You could even link to an internal playbook in your docs, for example.
 
+# Recapping What Just Happened
+Your automation system worked like this:
+
+Attack Simulation → Created a suspicious IAM user
+CloudTrail → Captured the CreateUser API call
+EventBridge → Detected the event pattern and triggered your rule
+Lambda Function → Received the event and executed your security response
+IAM Policy → Applied quarantine to prevent user actions
+SNS → Sent alert to your email
+This entire process happens automatically once CloudTrail events reach EventBridge (typically 5-15 minutes), providing rapid containment of potential threats.
+
+# Troubleshooting EventBridge issues
+As we start to wrap up, I want to share a few tips/tricks if you try to apply EventBridge in your own environments and encounter issues:
+
+EventBridge shows no matches: a) Wait longer (up to 15 minutes) for CloudTrail events to show up, or b) make sure your event pattern is correct. Even just a single typo or something missing will lead to this issue
+User created but not quarantined: a) Make sure the Lambda function is executing. If not, read on to the next one. b) Check Lambda function logs for errors
+No Lambda logs/execution but EventBridge shows matched events: This indicates EventBridge is detecting events but failing to invoke Lambda. Make sure you selected “Create a new role for this resource” when setting up the EventBridge target, rather than using a pre-existing execution role. This is critical because AWS will create a service-role whereas if you create the role yourself it would just be a regular role. It might look like it would work but it will fail to execute the Lambda function.
+EventBridge shows failed invocations: This is the same issue as the prior bullet point. Check CloudWatch metrics for your EventBridge rule and if you see failed invocations usually it’s because of permission issues with the execution role, and/or the resource-based policy in Lambda.
+
+# Download the Terraform template that deploys this
+Now that you’ve learned how to do this via the AWS console, it’s time for you to deploy this in your own AWS environments. I’ve made it super easy for you to do this with a Terraform template that you can download here. This template is fully customizable and in fact I would expect you to customize it after successfully deploying it in one of your sandbox accounts and testing it. You’ll want to customize it to your exact organization’s needs, and this template makes that super easy to do.
+
+# Conclusion
+Nice work! You’ve successfully built an automated security response system.
+
+This is just one example of security automation. The same patterns can be applied to detect and respond to many other security events. Beyond this lab, I would encourage you to think about different scenarios where you could apply this in your personal or org accounts without negatively impacting production or colleagues. I’ll leave you with a few ideas…
+
+
+
 
 
 
