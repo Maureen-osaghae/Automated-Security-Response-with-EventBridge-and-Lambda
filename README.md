@@ -273,6 +273,32 @@ Look for a user with a suspicious name (like admin-abc123, backup-def456, system
 Navigate to IAM > Users
 Look for a user with a suspicious name (like admin-abc123, backup-def456, system-ghi789, etc…)
 
+<img width="806" height="202" alt="image" src="https://github.com/user-attachments/assets/f69d3753-1ba6-4d21-b33f-3bbb93a4329c" />
+
+<img width="397" height="235" alt="image" src="https://github.com/user-attachments/assets/0f2583cf-cc24-40db-b0a0-7613968e6707" />
+
+
+If you see the user, great! The attack simulation worked. We’ll come back to this, but now let’s see if your security automation responded.
+
+# Check EventBridge Rule Activity
+Navigate to EventBridge > Rules
+Click on your detect-iam-createuser rule
+Go to the Metrics tab
+Look for:
+MatchedEvents: Should show 1 or more matches
+SuccessfulInvocations: Should show 1 or more successful triggers
+Invocations: Should show the rule was triggered
+
+<img width="764" height="233" alt="image" src="https://github.com/user-attachments/assets/e8eaba4f-299f-45a8-b0cc-c841c644bdeb" />
+
+If you see these metrics, EventBridge successfully detected the user creation and triggered your Lambda function. If not, give it another couple of minutes and refresh. You should eventually see the metrics, and once you do, proceed to step 3.
+
+#Check the Lambda Function Logs
+Navigate to Lambda > Functions > security-response
+Go to Monitor and review the metrics graphcs
+Then, click on View CloudWatch Logs
+Click on the most recent log stream (the first one)
+
 
 
 
