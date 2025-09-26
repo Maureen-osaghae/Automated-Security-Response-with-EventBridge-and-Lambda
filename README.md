@@ -107,7 +107,47 @@ import json
             'statusCode': 200,
             'body': json.dumps('Hello from Lambda!')
         }
+
 <img width="596" height="207" alt="image" src="https://github.com/user-attachments/assets/d391142b-35fc-4ed8-a5df-db457ec15d73" />
+
+# The Security Response Code
+Here’s the Python code for the security response function: check code file.
+
+After pasting code in the code file, click on the “Deploy” button.
+<img width="600" height="341" alt="image" src="https://github.com/user-attachments/assets/b28b41e9-2621-43c8-bca7-31609ef354be" />
+
+# Understanding the Code
+This function performs four key actions:
+
+Event Parsing: Extracts details from the EventBridge event containing CloudTrail data
+
+User Quarantine: Attaches a pre-deployed deny-all IAM policy to prevent any actions by the suspicious user
+
+User Tagging: Adds metadata tags to track the quarantine action and timing
+
+Alert Notification: Sends detailed information to the security team via SNS
+
+The quarantine policy (AutomatedSecurityQuarantine) has been pre-deployed for you. This simulates deploying a security quarantine policy to every AWS account within our organization that can 
+
+then be used by automation scripts, and that can be managed from a central location via IaC. It would look something like this:
+
+The quarantine policy (AutomatedSecurityQuarantine) has been pre-deployed in this lab. This simulates deploying a security quarantine policy to every AWS account within our organization that can then be used by automation scripts, and that can be managed from a central location via IaC. It would look something like this:
+
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "AutomatedSecurityQuarantine",
+          "Effect": "Deny",
+          "Action": "*",
+          "Resource": "*"
+        }
+      ]
+    }
+
+
+
+     
 
 
 
