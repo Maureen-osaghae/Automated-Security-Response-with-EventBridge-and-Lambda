@@ -232,9 +232,6 @@ This project showcases my ability to design, implement, and operationalize autom
 
 By transforming manual incident handling into a real-time, automated defense mechanism, I demonstrated both technical depth and the ability to deliver business impact through scalable security automation.
 
-# Download the Terraform template that deploys this
-Now that you’ve learned how to do this via the AWS console, it’s time for you to deploy this in your own AWS environments. I’ve made it super easy for you to do this with a Terraform template that you can download here. This template is fully customizable and in fact I would expect you to customize it after successfully deploying it in one of your sandbox accounts and testing it. You’ll want to customize it to your exact organization’s needs, and this template makes that super easy to do.
-
 # Infrastructure as Code (IaC)
 
 After completing the lab in the AWS Console, I developed a Terraform template to automate deployment across environments.
