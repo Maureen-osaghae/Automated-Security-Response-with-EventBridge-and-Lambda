@@ -7,7 +7,7 @@ A security engineer who just implemented CloudWatch monitoring for IAM activitie
 
 The dashboards are working great, but there’s a problem: you’re still relying on humans to see the alerts and respond. What happens at 2 AM when a threat actor starts creating users? What about during weekends or holidays?
 
-Manual response has limitations:
+## Manual response has limitations:
 
 • Delay: By the time someone sees an alert and responds, damage may already be done
 
