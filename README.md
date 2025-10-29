@@ -234,7 +234,7 @@ By transforming manual incident handling into a real-time, automated defense mec
 
 # Infrastructure as Code (IaC)
 
-After completing the lab in the AWS Console, I developed a Terraform template to automate deployment across environments.
+After completing the lab in the AWS Console, I developed a Terraform template to automate deployment across environments (Check my repo).
 This template encapsulates:
 - EventBridge rule creation
 - Lambda deployment
